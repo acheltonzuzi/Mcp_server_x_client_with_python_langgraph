@@ -30,13 +30,27 @@ async def main():
 
             # Create and run the agent
             agent = create_react_agent(model, tools)
-            agent_response = await agent.ainvoke({"messages": "Quanto é a soma de 40 e 50?"})
-            messages = agent_response["messages"]
-            # Procura a última mensagem da IA que tem conteúdo
-            for msg in reversed(messages):
-                if isinstance(msg, BaseMessage) and msg.content:
-                    print("Agente:", msg.content)
+            while True:
+                # Get user input
+                user_input = input("User: ")
+                if user_input.lower() == "exit":
                     break
+
+                # Send the input to the agent and get the response
+                agent_response = await agent.ainvoke({"messages": user_input})
+                messages = agent_response["messages"]
+                # Procura a última mensagem da IA que tem conteúdo
+                for msg in reversed(messages):
+                    if isinstance(msg, BaseMessage) and msg.content:
+                        print("Agente:", msg.content)
+                        break
+            # agent_response = await agent.ainvoke({"messages": "Adicione Achelton a lista de nomes"})
+            # messages = agent_response["messages"]
+            # # Procura a última mensagem da IA que tem conteúdo
+            # for msg in reversed(messages):
+            #     if isinstance(msg, BaseMessage) and msg.content:
+            #         print("Agente:", msg.content)
+            #         break
 
 # Run the main function
 asyncio.run(main())

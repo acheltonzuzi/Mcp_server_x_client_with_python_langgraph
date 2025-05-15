@@ -7,10 +7,11 @@ from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import BaseMessage
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from langchain.memory import ConversationBufferMemory
 
 load_dotenv()
 model = ChatOpenAI(model="gpt-4o")
-
+memory = ConversationBufferMemory()
 server_params = StdioServerParameters(
     command="python",
     # Make sure to update to the full absolute path to your math_server.py file
@@ -27,9 +28,11 @@ async def main():
 
             # Get tools
             tools = await load_mcp_tools(session)
-
+            prompt="""
+            Você é um assistente útil. Teu nome e Ashton e você é um assistente de programação. Você pode me ajudar a programar em Python e a resolver problemas de programação. Você também pode me ajudar a fazer cálculos matemáticos e a resolver problemas matemáticos
+            """
             # Create and run the agent
-            agent = create_react_agent(model, tools)
+            agent = create_react_agent(model, tools,prompt=prompt)
             while True:
                 # Get user input
                 user_input = input("User: ")

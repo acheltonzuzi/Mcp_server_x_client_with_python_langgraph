@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Achelton Pambo",
+      "email": "achelton@gmail.com"
+    },
+    {
+      "id": "77db",
+      "name": "joao",
+      "email": "joao@gmail.com"
+    },
+    {
+      "id": "bb71",
+      "name": "Pedro",
+      "email": "pedro@gmail.com"
+    },
+    {
+      "id": "f9fe",
+      "name": "joaqui",
+      "email": "fenix@gmail.com"
+    },
+    {
+      "id": "5cf6",
+      "name": "Ana Paula",
+      "email": "Ana@gmail.com"
+    }
+  ]
+}

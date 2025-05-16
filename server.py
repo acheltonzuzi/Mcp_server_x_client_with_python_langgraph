@@ -4,6 +4,7 @@ mcp = FastMCP(name="My mcp server")
 from pydantic import BaseModel
 import requests
 import asyncio
+import json
 nomes=[]
 users=[]
 class User(BaseModel):
@@ -41,16 +42,18 @@ def add_to_list(name:str) -> list:
 def get_list() -> list:
     """get the list of names"""
     return nomes
+
 @mcp.tool()
 def create_user(name: str, email: str) -> list:
     """create a user"""
-    users = User(name=name, email=email)
+    requests.post("http://localhost:3000/users", json={"name": name, "email": email})
     return users
 
 @mcp.tool()
 def get_users() -> list:
     """Get the list of users"""
-    return [user.dict() for user in users]
+    users=requests.get("http://localhost:3000/users").json()
+    return users
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
